@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>山海志异 | AI漫剧作品集</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink-black: #1a1a1a;
+      --paper-cream: #f5f1e8;
+      --ink-blue: #2c4a6e;
+      --vermillion: #d4533b;
+      --gold: #c9a959;
+      --mist: rgba(44, 74, 110, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Serif SC', serif;
+      background: var(--paper-cream);
+      color: var(--ink-black);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* 背景纹理 */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%231a1a1a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      background: linear-gradient(180deg, 
+        rgba(44, 74, 110, 0.05) 0%, 
+        transparent 50%,
+        rgba(201, 169, 89, 0.05) 100%
+      );
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, 
+        rgba(201, 169, 89, 0.1) 0%, 
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+
+    .title-container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .title-sub {
+      font-size: 0.875rem;
+      letter-spacing: 0.5em;
+      color: var(--ink-blue);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .title-main {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: clamp(4rem, 15vw, 10rem);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--ink-black) 0%, var(--ink-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.2s forwards;
+    }
+
+    .title-tagline {
+      font-size: 1.25rem;
+      color: var(--ink-blue);
+      font-weight: 400;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.4s forwards;
+    }
+
+    .title-divider {
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        var(--gold), 
+        transparent
+      );
+      margin: 0 auto 3rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.6s forwards;
+    }
+
+    .author-info {
+      font-size: 1rem;
+      color: rgba(26, 26, 26, 0.6);
+      opacity: 0;
+      animation: fadeInUp 1s ease 0.8s forwards;
+    }
+
+    .author-info span {
+      color: var(--vermillion);
+      font-weight: 600;
+    }
+
+    /* 滚动提示 */
+    .scroll-hint {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(26, 26, 26, 0.4);
+      opacity: 0;
+      animation: fadeIn 1s ease 1.2s forwards;
+    }
+
+    .scroll-hint svg {
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* Section Common */
+    .section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-number {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 6rem;
+      color: var(--mist);
+      line-height: 1;
+      margin-bottom: -1rem;
+    }
+
+    .section-title {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 3rem;
+      color: var(--ink-black);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: rgba(26, 26, 26, 0.5);
+      letter-spacing: 0.1em;
+    }
+
+    /* Story Section */
+    .story-content {
+      display: grid;
+      gap: 3rem;
+    }
+
+    .story-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 3rem;
+      box-shadow: 0 4px 24px rgba(26, 26, 26, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--vermillion), var(--gold));
+    }
+
+    .story-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--vermillion);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .story-text {
+      font-size: 1.125rem;
+      line-height: 2;
+      color: var(--ink-black);
+    }
+
+    /* World Setting */
+    .world-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .world-item {
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 24px rgba(26, 26, 26, 0.06);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .world-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 40px rgba(26, 26, 26, 0.12);
+    }
+
+    .world-item-icon {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 2.5rem;
+      color: var(--ink-blue);
+      margin-bottom: 1rem;
+    }
+
+    .world-item-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: var(--ink-black);
+    }
+
+    .world-item-desc {
+      font-size: 0.9375rem;
+      color: rgba(26, 26, 26, 0.7);
+      line-height: 1.8;
+    }
+
+    /* Characters */
+    .characters {
+      display: grid;
+      gap: 4rem;
+    }
+
+    .character {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .character:nth-child(even) {
+      direction: rtl;
+    }
+
+    .character:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .character-visual {
+      background: linear-gradient(135deg, var(--mist) 0%, rgba(201, 169, 89, 0.05) 100%);
+      border-radius: 1rem;
+      padding: 2rem;
+      aspect-ratio: 3/4;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .character-visual::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, 
+        rgba(201, 169, 89, 0.15) 0%, 
+        transparent 50%
+      );
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .character-placeholder {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .character-name-big {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 4rem;
+      color: var(--ink-blue);
+      opacity: 0.3;
+    }
+
+    .character-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .character-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .character-name {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 2.5rem;
+      color: var(--ink-black);
+    }
+
+    .character-role {
+      font-size: 0.875rem;
+      color: var(--vermillion);
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.75rem;
+      border: 1px solid var(--vermillion);
+      border-radius: 2rem;
+    }
+
+    .character-desc {
+      color: rgba(26, 26, 26, 0.8);
+      line-height: 1.9;
+    }
+
+    .character-abilities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .ability-tag {
+      font-size: 0.8125rem;
+      padding: 0.5rem 1rem;
+      background: var(--mist);
+      border-radius: 0.5rem;
+      color: var(--ink-blue);
+    }
+
+    /* Storyboard */
+    .storyboard {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .storyboard-intro {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .storyboard-intro h3 {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .storyboard-intro p {
+      color: rgba(26, 26, 26, 0.6);
+    }
+
+    .panel {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2rem;
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 24px rgba(26, 26, 26, 0.06);
+      position: relative;
+    }
+
+    .panel-number {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 3rem;
+      color: var(--gold);
+      width: 4rem;
+      text-align: center;
+    }
+
+    .panel-content {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .panel-visual {
+      background: linear-gradient(135deg, var(--mist) 0%, rgba(201, 169, 89, 0.08) 100%);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      font-size: 0.9375rem;
+      color: rgba(26, 26, 26, 0.8);
+      line-height: 1.8;
+      border-left: 3px solid var(--gold);
+    }
+
+    .panel-visual strong {
+      color: var(--ink-blue);
+    }
+
+    .panel-dialogue {
+      background: rgba(44, 74, 110, 0.03);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .panel-dialogue::before {
+      content: '"';
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 4rem;
+      color: var(--ink-blue);
+      opacity: 0.1;
+      position: absolute;
+      top: -0.5rem;
+      left: 1rem;
+    }
+
+    .panel-dialogue p {
+      position: relative;
+      z-index: 1;
+      font-style: italic;
+      color: var(--ink-black);
+    }
+
+    .panel-dialogue .speaker {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--vermillion);
+      margin-right: 0.5rem;
+    }
+
+    .panel-note {
+      font-size: 0.8125rem;
+      color: rgba(26, 26, 26, 0.5);
+      padding: 0.75rem 1rem;
+      background: rgba(201, 169, 89, 0.08);
+      border-radius: 0.5rem;
+    }
+
+    /* Image Prompts Section */
+    .prompts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .prompt-card {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(26, 26, 26, 0.06);
+      transition: transform 0.3s ease;
+    }
+
+    .prompt-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .prompt-preview {
+      background: linear-gradient(135deg, var(--mist) 0%, rgba(201, 169, 89, 0.1) 100%);
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .prompt-preview-icon {
+      font-family: 'Ma Shan Zheng', cursive;
+      font-size: 3rem;
+      color: var(--ink-blue);
+      opacity: 0.3;
+    }
+
+    .prompt-preview-label {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.6875rem;
+      color: var(--vermillion);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .prompt-content {
+      padding: 1.5rem;
+    }
+
+    .prompt-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--ink-black);
+    }
+
+    .prompt-text {
+      font-size: 0.875rem;
+      color: rgba(26, 26, 26, 0.7);
+      line-height: 1.8;
+      padding: 1rem;
+      background: rgba(44, 74, 110, 0.03);
+      border-radius: 0.5rem;
+      font-family: monospace;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: linear-gradient(180deg, transparent, var(--mist));
+    }
+
+    .footer-text {
+      font-size: 1rem;
+      color: rgba(26, 26, 26, 0.5);
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      font-size: 0.875rem;
+      color: var(--ink-blue);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: var(--vermillion);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .character {
+        grid-template-columns: 1fr;
+      }
+
+      .character:nth-child(even) {
+        direction: ltr;
+      }
+
+      .panel {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .panel-number {
+        width: auto;
+        font-size: 2rem;
+      }
+
+      .prompts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="title-container">
+      <p class="title-sub">AI漫剧作品集</p>
+      <h1 class="title-main">山海志异</h1>
+      <p class="title-tagline">修复一页古籍，拯救一方世界</p>
+      <div class="title-divider"></div>
+      <p class="author-info">创作者：<span>曾洋</span> · 全栈AI漫剧作品</p>
+    </div>
+    
+    <div class="scroll-hint">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+      <span>向下滚动</span>
+    </div>
+  </section>
+
+  <!-- Story Overview -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-number">壹</div>
+      <h2 class="section-title">故事梗概</h2>
+      <p class="section-subtitle">STORY SYNOPSIS</p>
+    </div>
+
+    <div class="story-content">
+      <div class="story-card">
+        <p class="story-label">一句话梗概</p>
+        <p class="story-text">现代古籍修复师意外穿越进《山海经》世界，发现自己修复的每一页破损古籍，都在改变这个世界的命运。</p>
+      </div>
+
+      <div class="story-card">
+        <p class="story-label">故事内核</p>
+        <p class="story-text">《山海经》世界是一个真实存在的平行维度，由"文气"维系运转。古籍在现实世界的状态直接影响这个世界——古籍破损则世界出现"空白之地"，古籍被修复则世界恢复生机。</p>
+        <p class="story-text" style="margin-top: 1rem;">主角林溪在修复过程中发现，自己不仅能看见"文气"流动，更能通过书写文字暂时修复世界的破损。她开始了一段"以笔为剑，以墨为盾"的奇幻旅程。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- World Setting -->
+  <section class="section" style="background: linear-gradient(180deg, transparent, var(--mist), transparent);">
+    <div class="section-header">
+      <div class="section-number">贰</div>
+      <h2 class="section-title">世界观设定</h2>
+      <p class="section-subtitle">WORLD BUILDING</p>
+    </div>
+
+    <div class="world-grid">
+      <div class="world-item">
+        <div class="world-item-icon">文</div>
+        <h3 class="world-item-title">力量体系：文气</h3>
+        <p class="world-item-desc">以"文字"为核心的独特力量体系。墨韵用于具象化物品，笔力用于攻防战斗，书魂是与神兽建立契约的最高阶能力。</p>
+      </div>
+
+      <div class="world-item">
+        <div class="world-item-icon">山</div>
+        <h3 class="world-item-title">昆仑墟</h3>
+        <p class="world-item-desc">世界中心，天帝居所。云雾缭绕的巨型山脉，山腰有瀑布倒流（弱水逆行），是主角初次降临之地。</p>
+      </div>
+
+      <div class="world-item">
+        <div class="world-item-icon">狐</div>
+        <h3 class="world-item-title">青丘</h3>
+        <p class="world-item-desc">九尾狐族领地，银白色建筑群落，与人类城市截然不同的异域风情。涂山九的故乡。</p>
+      </div>
+
+      <div class="world-item">
+        <div class="world-item-icon">墨</div>
+        <h3 class="world-item-title">蚀文</h3>
+        <p class="world-item-desc">世界的"墨迹"，被遗忘的文字所化。全身如水墨渲染，没有固定形态，目的是吞噬所有文字让世界归于虚无。不是纯粹的恶，而是被时代遗忘的悲伤集合。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Characters -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-number">叁</div>
+      <h2 class="section-title">角色设定</h2>
+      <p class="section-subtitle">CHARACTER DESIGN</p>
+    </div>
+
+    <div class="characters">
+      <!-- 主角 -->
+      <div class="character">
+        <div class="character-visual">
+          <div class="character-placeholder">
+            <div class="character-name-big">林溪</div>
+          </div>
+        </div>
+        <div class="character-info">
+          <div class="character-header">
+            <h3 class="character-name">林溪</h3>
+            <span class="character-role">主角</span>
+          </div>
+          <p class="character-desc"><strong>身份：</strong>故宫博物院古籍修复师，26岁</p>
+          <p class="character-desc"><strong>外貌：</strong>清秀干净，常穿灰色棉麻衣服，手指修长有墨迹，戴细框眼镜。穿越后身着灰白色棉麻长袍。</p>
+          <p class="character-desc"><strong>性格：</strong>沉静、专注、有强迫症般的完美主义，但在危险时刻异常冷静。</p>
+          <p class="character-desc"><strong>背景：</strong>祖上是明清宫廷画师，家族世代守护一本残卷《山海图志》。</p>
+          <div class="character-abilities">
+            <span class="ability-tag">墨染 · 看见文气流动</span>
+            <span class="ability-tag">补天 · 书写修复世界</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 配角 -->
+      <div class="character">
+        <div class="character-visual">
+          <div class="character-placeholder">
+            <div class="character-name-big">涂山九</div>
+          </div>
+        </div>
+        <div class="character-info">
+          <div class="character-header">
+            <h3 class="character-name">涂山九</h3>
+            <span class="character-role">核心配角</span>
+          </div>
+          <p class="character-desc"><strong>身份：</strong>青丘九尾狐族少主，外表18岁（实际年龄不详）</p>
+          <p class="character-desc"><strong>外貌：</strong>银白长发，琥珀色眼睛，有九条尾巴但平时藏起只露一条。</p>
+          <p class="character-desc"><strong>性格：</strong>慵懒狡黠，嘴硬心软，嘴上说"不救人"但每次都出手。</p>
+          <div class="character-abilities">
+            <span class="ability-tag">幻瞳 · 看穿幻象谎言</span>
+            <span class="ability-tag">魅音 · 声音操控心智</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 反派 -->
+      <div class="character">
+        <div class="character-visual">
+          <div class="character-placeholder">
+            <div class="character-name-big">蚀文</div>
+          </div>
+        </div>
+        <div class="character-info">
+          <div class="character-header">
+            <h3 class="character-name">蚀文</h3>
+            <span class="character-role">反派</span>
+          </div>
+          <p class="character-desc"><strong>身份：</strong>世界的"墨迹"，被遗忘的文字所化</p>
+          <p class="character-desc"><strong>外貌：</strong>全身如水墨渲染，没有固定形态，以墨色雾气或扭曲人形出现。</p>
+          <p class="character-desc"><strong>目的：</strong>吞噬所有文字，让《山海经》世界归于虚无。</p>
+          <p class="character-desc"><strong>悲剧性：</strong>不是纯粹的恶，而是被时代遗忘的悲伤集合。他的存在本身就是一种悲哀。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Storyboard -->
+  <section class="section" style="background: linear-gradient(180deg, transparent, var(--mist), transparent);">
+    <div class="section-header">
+      <div class="section-number">肆</div>
+      <h2 class="section-title">第一话分镜脚本</h2>
+      <p class="section-subtitle">STORYBOARD · 墨起昆仑</p>
+    </div>
+
+    <div class="storyboard-intro">
+      <h3>第一话：墨起昆仑</h3>
+      <p>场景：故宫博物院古籍修复室 → 山海经世界·昆仑山脚</p>
+    </div>
+
+    <div class="storyboard">
+      <!-- Panel 1 -->
+      <div class="panel">
+        <div class="panel-number">一</div>
+        <div class="panel-content">
+          <div class="panel-visual">
+            <strong>特写：</strong>一双纤细的手正在修复一本泛黄古籍，毛笔蘸墨落下。镜头缓慢拉开，显示修复室全貌——窗外是故宫的红墙黄瓦，夕阳斜照。
+          </div>
+          <div class="panel-dialogue">
+            <p><span class="speaker">旁白：</span>我叫林溪，故宫博物院的古籍修复师。我的工作，是让那些被时间遗忘的文字，重新被看见。</p>
+          </div>
+          <div class="panel-note">📌 暖色调，营造静谧感。窗外光晕。</div>
+        </div>
+      </div>
+
+      <!-- Panel 2 -->
+      <div class="panel">
+        <div class="panel-number">二</div>
+        <div class="panel-content">
+          <div class="panel-visual">
+            <strong>推进镜头：</strong>林溪翻开正在修复的书——《山海图志·残卷》。书页中央有一个不规则的空洞，边缘如被烧焦。然后是林溪困惑的表情特写。
+          </div>
+          <div class="panel-dialogue">
+            <p><span class="speaker">林溪：</span>奇怪……这道"烧痕"不是火造成的。更像是……墨水在"后退"？</p>
+          </div>
+          <div class="panel-note">📌 制造悬念，书页空洞特写。</div>
+        </div>
+      </div>
+
+      <!-- Panel 3-4 -->
+      <div class="panel">
+        <div class="panel-number">三</div>
+        <div class="panel-content">
+          <div class="panel-visual">
+            <strong>动态序列：</strong>林溪用手指轻触空洞边缘。接触瞬间，墨迹像活物般缠绕上她的手指，蔓延至手腕。修复室开始崩塌——不是物理崩塌，而是"文字化"：桌椅变成散落的字符，窗户变成空白。林溪整个人被墨迹吞没。
+          </div>
+          <div class="panel-dialogue">
+            <p><span class="speaker">林溪：</span>！？什么——</p>
+          </div>
+          <div class="panel-note">📌 视觉冲击：现实世界瓦解成文字和空白。动态感强烈。</div>
+        </div>
+      </div>
+
+      <!-- Panel 5-6 -->
+      <div class="panel">
+        <div class="panel-number">四</div>
+        <div class="panel-content">
+          <div class="panel-visual">
+            <strong>转场：</strong>大片留白后，新画面逐渐浮现。全景：昆仑山脚。云雾缭绕的巨型山脉，山腰有瀑布倒流（弱水逆行）。天空中隐约可见巨鸟飞翔（可能是精卫）。
+          </div>
+          <div class="panel-dialogue">
+            <p><span class="speaker">旁白：</span>后来我才知道，我修复的每一页，都是这个世界的一片碎片。我在修复的不是书——是一个世界。</p>
+          </div>
+          <div class="panel-note">📌 建立镜头，展示山海经世界的奇观。参考传统山水画构图。</div>
+        </div>
+      </div>
+
+      <!-- Panel 7-8 -->
+      <div class="panel">
+        <div class="panel-number">五</div>
+        <div class="panel-content">
+          <div class="panel-visual">
+            <strong>动态镜头：</strong>林溪从半空坠落，惊慌失措。一只白色尾巴突然卷住她的腰，将她甩到山石上。涂山九半躺在山石上，慵懒地看着她。身后云海翻涌。
+          </div>
+          <div class="panel-dialogue">
+            <p><span class="speaker">涂山九：</span>又一个掉进来的？人界最近是怎么了，落东西的频率越来越高。</p>
+          </div>
+          <div class="panel-note">📌 第一印象：慵懒+神秘。林溪和涂山九的首次相遇。</div>
+        </div>
+      </div>
+
+      <!-- Panel 9-11 -->
+      <div class="panel">
+        <div class="panel-number">六</div>
+        <div class="panel-content">
+          <div class="panel-visual">
+            <strong>紧张升级：</strong>远处传来巨响。涂山九眼神一凛，站起身，九条尾巴瞬间显现。墨色雾气从山脚涌来，雾中浮现扭曲的人形——是"蚀文"的低阶分身。周围草木接触到雾气，开始变成空白。
+          </div>
+          <div class="panel-dialogue">
+            <p><span class="speaker">涂山九：</span>先别问问题了，小修复师。有东西来了——</p>
+            <p><span class="speaker">蚀文分身：</span>……文……字……被……忘……了……</p>
+          </div>
+          <div class="panel-note">📌 恐怖感：现实被抹除。涂山九战斗状态。</div>
+        </div>
+      </div>
+
+      <!-- Panel 12-13 -->
+      <div class="panel">
+        <div class="panel-number">七</div>
+        <div class="panel-content">
+          <div class="panel-visual">
+            <strong>关键时刻：</strong>林溪本能地抬起手，指尖墨迹突然发出淡金色光芒。一个"山"字从她手中浮出，形成屏障挡住墨雾。涂山九饶有兴致地看着林溪。身后，昆仑山的第一缕晨光穿透云层，照在两人身上。
+          </div>
+          <div class="panel-dialogue">
+            <p><span class="speaker">林溪：</span>这是……！？我写的字……活了？</p>
+            <p><span class="speaker">涂山九：</span>哦？有意思。看来你不是普通人，小修复师。</p>
+          </div>
+          <div class="panel-note">📌 发现自身能力的关键时刻。晨光象征希望与新开始。</div>
+        </div>
+      </div>
+
+      <!-- Panel 14 -->
+      <div class="panel">
+        <div class="panel-number">八</div>
+        <div class="panel-content">
+          <div class="panel-visual">
+            <strong>定格画面：</strong>林溪（金光微亮）与涂山九（银尾飞扬）并肩站立，背后是巍峨昆仑与涌来的墨雾。标题《山海志异》+ 第一话·墨起昆仑 浮现。
+          </div>
+          <div class="panel-dialogue">
+            <p><span class="speaker">——</span>第一话 完</p>
+          </div>
+          <div class="panel-note">📌 震撼收尾。悬念留白：她们将如何对抗蚀文？</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Prompts -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-number">伍</div>
+      <h2 class="section-title">AI图像生成提示词</h2>
+      <p class="section-subtitle">IMAGE GENERATION PROMPTS</p>
+    </div>
+
+    <div class="prompts-grid">
+      <div class="prompt-card">
+        <div class="prompt-preview">
+          <span class="prompt-preview-label">封面</span>
+          <div class="prompt-preview-icon">山海</div>
+        </div>
+        <div class="prompt-content">
+          <h4 class="prompt-title">作品封面图</h4>
+          <p class="prompt-text">Traditional Chinese ink wash painting style, majestic Kunlun Mountains with floating cloud mists, ancient calligraphy characters floating in the air, a young woman in gray robes standing on a mountain peak, her hand glowing with golden light, a silver-haired nine-tailed fox beside her, ink splashes and watercolor effects, dramatic lighting, ethereal atmosphere, vertical composition, book cover design, masterpiece quality</p>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-preview">
+          <span class="prompt-preview-label">角色</span>
+          <div class="prompt-preview-icon">林溪</div>
+        </div>
+        <div class="prompt-content">
+          <h4 class="prompt-title">主角 · 林溪</h4>
+          <p class="prompt-text">Chinese ink wash portrait, young woman 26 years old, clean refined features, thin-rimmed glasses, gray cotton robe with subtle embroidery, slender hands with faint ink stains, long black hair loosely tied, holding an ancient brush, fingers glowing with faint golden light, serious focused expression, traditional Chinese art style, soft lighting, elegant and scholarly atmosphere, upper body portrait</p>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-preview">
+          <span class="prompt-preview-label">角色</span>
+          <div class="prompt-preview-icon">涂山九</div>
+        </div>
+        <div class="prompt-content">
+          <h4 class="prompt-title">配角 · 涂山九</h4>
+          <p class="prompt-text">Chinese ink wash portrait, ethereal young man with silver-white long hair, amber glowing eyes, nine silver fox tails fanned out behind him, wearing white flowing robes with subtle silver embroidery, lazy mysterious smile, one visible tail wrapped casually around his arm, traditional Chinese fantasy art style, moonlit atmosphere, mystical and seductive, upper body portrait</p>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-preview">
+          <span class="prompt-preview-label">场景</span>
+          <div class="prompt-preview-icon">昆仑</div>
+        </div>
+        <div class="prompt-content">
+          <h4 class="prompt-title">场景 · 昆仑山脚</h4>
+          <p class="prompt-text">Traditional Chinese landscape painting, massive Kunlun Mountains shrouded in clouds and mist, waterfalls flowing upward in the distance, giant mythical birds silhouettes in the sky, ancient pine trees on rocky cliffs, ink wash style with gold leaf accents, panoramic view, mystical atmosphere, Shan Hai Jing inspired scenery, masterpiece quality, wide angle composition</p>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-preview">
+          <span class="prompt-preview-label">概念</span>
+          <div class="prompt-preview-icon">蚀文</div>
+        </div>
+        <div class="prompt-content">
+          <h4 class="prompt-title">反派 · 蚀文概念图</h4>
+          <p class="prompt-text">Dark ink wash style, amorphous shadow entity made of flowing black ink and corrupted calligraphy characters, distorted humanoid form emerging from black mist, ancient Chinese characters dissolving into void, surrounding environment turning into blank white space, eerie and melancholic atmosphere, conceptual art, horror-fantasy fusion, dramatic lighting contrast</p>
+        </div>
+      </div>
+
+      <div class="prompt-card">
+        <div class="prompt-preview">
+          <span class="prompt-preview-label">分镜</span>
+          <div class="prompt-preview-icon">穿越</div>
+        </div>
+        <div class="prompt-content">
+          <h4 class="prompt-title">关键分镜 · 穿越瞬间</h4>
+          <p class="prompt-text">Sequential art style, split into 3 panels: Panel 1 - Close-up of hand touching ancient book with mysterious void hole; Panel 2 - Room dissolving into floating Chinese characters and blank spaces; Panel 3 - Woman being consumed by swirling black ink, dramatic action, comic book layout, Chinese ink wash style with modern manga influence, cinematic composition</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-text">AI漫剧全栈作品 · 展示编剧与视觉创作能力</p>
+    <div class="footer-links">
+      <span class="footer-link">故事创作</span>
+      <span style="color: var(--gold);">·</span>
+      <span class="footer-link">世界观构建</span>
+      <span style="color: var(--gold);">·</span>
+      <span class="footer-link">角色设计</span>
+      <span style="color: var(--gold);">·</span>
+      <span class="footer-link">分镜脚本</span>
+      <span style="color: var(--gold);">·</span>
+      <span class="footer-link">AI视觉生成</span>
+    </div>
+  </footer>
+</body>
+</html>
