@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ meta.title }}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-bg: #0a0b14;
+      --c-bg2: #0f1123;
+      --c-surface: #13152a;
+      --c-border: rgba(201,168,76,.2);
+      --c-gold: #c9a84c;
+      --c-gold2: #e8c46a;
+      --c-text: #e8e0d0;
+      --c-text2: #8a8070;
+      --c-accent: #c9a84c;
+      --font-zh: 'Noto Serif SC', 'SimSun', serif;
+      --font-title: 'Ma Shan Zheng', cursive;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: var(--font-zh);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,11,20,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--c-border);
+      padding: 0 2rem;
+    }
+    nav .container {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; height: 60px;
+    }
+    nav .logo { font-family: var(--font-title); font-size: 1.5rem; color: var(--c-gold); text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav a { color: var(--c-text2); text-decoration: none; font-size: .9rem; transition: color .3s; }
+    nav a:hover { color: var(--c-gold); }
+
+    /* hero */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      background: linear-gradient(160deg, #0a0b14 40%, #0f1a2a 100%);
+      padding: 6rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+    }
+    .hero-img-wrap {
+      position: relative; border-radius: 12px; overflow: hidden;
+      aspect-ratio: 16/9; background: var(--c-surface);
+      border: 1px solid var(--c-border);
+    }
+    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-text { text-align: left; }
+    .hero-title {
+      font-family: var(--font-title); font-size: 3.5rem; color: var(--c-gold);
+      line-height: 1.2; margin-bottom: 1rem;
+      text-shadow: 0 0 40px rgba(201,168,76,.3);
+    }
+    .hero-subtitle { font-size: 1.1rem; color: var(--c-text2); margin-bottom: 2rem; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .hero-tags .tag {
+      padding: .25rem .75rem; border-radius: 20px;
+      background: rgba(201,168,76,.12); border: 1px solid var(--c-border);
+      font-size: .8rem; color: var(--c-gold2);
+    }
+    .hero-author { margin-top: 1.5rem; font-size: .9rem; color: var(--c-text2); }
+    .hero-author span { color: var(--c-gold); }
+
+    /* container */
+    .container { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+    section { padding: 5rem 0; }
+
+    /* labels */
+    .section-label {
+      font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--c-gold); opacity: .7; margin-bottom: .5rem;
+    }
+    .section-title {
+      font-family: var(--font-title); font-size: 2.2rem; color: var(--c-gold);
+      margin-bottom: .5rem;
+    }
+    .section-desc { color: var(--c-text2); margin-bottom: 2rem; max-width: 600px; }
+    .divider {
+      width: 60px; height: 2px; background: linear-gradient(90deg, var(--c-gold), transparent);
+      margin-bottom: 2rem;
+    }
+
+    /* character grid */
+    .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 2rem; }
+    .char-card {
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: 12px; overflow: hidden; transition: transform .3s, border-color .3s;
+    }
+    .char-card:hover { transform: translateY(-4px); border-color: var(--c-gold); }
+    .char-img-wrap { position: relative; }
+    .char-img-wrap img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+    .char-img-wrap img[src=""] { display: none; }
+    .char-img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(19,21,42,.8) 100%);
+    }
+    .char-badge {
+      position: absolute; bottom: .75rem; left: .75rem; z-index: 1;
+      padding: .2rem .6rem; border-radius: 20px; font-size: .75rem; font-weight: 600;
+    }
+    .badge-protagonist { background: rgba(201,168,76,.85); color: #1a1a2e; }
+    .badge-supporting { background: rgba(76,132,255,.85); color: #fff; }
+    .badge-antagonist { background: rgba(180,50,50,.85); color: #fff; }
+    .char-info { padding: 1.25rem; }
+    .char-name { font-family: var(--font-title); font-size: 1.5rem; color: var(--c-gold); margin-bottom: .25rem; }
+    .char-name-en { font-size: .8rem; color: var(--c-text2); margin-bottom: .75rem; }
+    .char-desc { font-size: .9rem; color: var(--c-text2); margin-bottom: 1rem; line-height: 1.7; }
+    .char-ability { font-size: .85rem; color: var(--c-text); }
+    .char-ability span { color: var(--c-gold); font-weight: 600; }
+
+    /* world */
+    .world-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.5rem; }
+    .world-card {
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: 10px; overflow: hidden;
+    }
+    .world-card-img { aspect-ratio: 16/9; overflow: hidden; }
+    .world-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .world-card-img:has(img[src=""]) { display: none; }
+    .world-card-body { padding: 1rem 1.25rem; }
+    .world-card-title { font-family: var(--font-title); font-size: 1.2rem; color: var(--c-gold); margin-bottom: .5rem; }
+    .world-card-text { font-size: .875rem; color: var(--c-text2); line-height: 1.7; }
+
+    /* power system */
+    .power-system { margin-top: 2rem; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 10px; padding: 1.5rem; }
+    .power-system h3 { font-family: var(--font-title); color: var(--c-gold); margin-bottom: 1rem; font-size: 1.2rem; }
+    .power-list { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+    .power-item { display: flex; align-items: flex-start; gap: .75rem; font-size: .9rem; }
+    .power-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+    .dot-gold { background: var(--c-gold); box-shadow: 0 0 8px rgba(201,168,76,.5); }
+    .dot-blue { background: #4c84ff; box-shadow: 0 0 8px rgba(76,132,255,.5); }
+    .dot-red { background: #b43232; box-shadow: 0 0 8px rgba(180,50,50,.5); }
+    .power-name { color: var(--c-text); font-weight: 600; margin-bottom: .1rem; }
+    .power-desc { color: var(--c-text2); }
+
+    /* episodes / storyboard */
+    .episodes { display: flex; flex-direction: column; gap: 1.5rem; }
+    .episode-title { font-family: var(--font-title); font-size: 1.5rem; color: var(--c-gold); margin-bottom: 1rem; }
+    .story-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.5rem; }
+    .frame-card {
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: 10px; overflow: hidden;
+    }
+    .frame-img {
+      aspect-ratio: 16/9; background: var(--c-bg2);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: .25rem; font-size: .8rem; color: var(--c-text2);
+      overflow: hidden; position: relative;
+    }
+    .frame-img img { width: 100%; height: 100%; object-fit: cover; }
+    .frame-img .icon { font-size: 1.5rem; }
+    .frame-body { padding: 1rem 1.25rem; }
+    .frame-num { font-size: .75rem; color: var(--c-gold); margin-bottom: .5rem; font-weight: 600; }
+    .frame-desc { font-size: .875rem; color: var(--c-text2); margin-bottom: .75rem; line-height: 1.6; }
+    .frame-dialogue { font-size: .8rem; color: var(--c-text); font-style: italic; border-left: 2px solid var(--c-gold); padding-left: .75rem; }
+
+    /* contact */
+    .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+    .contact-links a {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .5rem 1.25rem; border-radius: 25px;
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      color: var(--c-text); text-decoration: none; font-size: .9rem;
+      transition: border-color .3s, color .3s;
+    }
+    .contact-links a:hover { border-color: var(--c-gold); color: var(--c-gold); }
+    .contact-intro { color: var(--c-text2); font-size: 1rem; margin-bottom: 1rem; }
+    .contact-collab { color: var(--c-text2); font-size: .9rem; }
+
+    /* footer */
+    footer {
+      text-align: center; padding: 2rem; color: var(--c-text2); font-size: .8rem;
+      border-top: 1px solid var(--c-border); margin-top: 2rem;
+    }
+
+    /* responsive */
+    @media (max-width: 768px) {
+      nav ul { gap: 1rem; }
+      nav a { font-size: .8rem; }
+      .hero-content { grid-template-columns: 1fr; }
+      .hero-text { text-align: center; }
+      .hero-title { font-size: 2.5rem; }
+      .char-grid { grid-template-columns: 1fr; }
+      .story-grid { grid-template-columns: 1fr; }
+    }
+
+    /* cover section */
+    section#cover {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,.07) 0%, transparent 70%);
+      padding-top: 60px;
+    }
+    section#cover .container { text-align: center; }
+    .cover-image-wrap {
+      max-width: 700px; margin: 0 auto 2rem;
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--c-border);
+      aspect-ratio: 16/9; background: var(--c-surface);
+    }
+    .cover-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cover-title { font-family: var(--font-title); font-size: 3.5rem; color: var(--c-gold); margin-bottom: .5rem; text-shadow: 0 0 40px rgba(201,168,76,.3); }
+    .cover-subtitle { font-size: 1.1rem; color: var(--c-text2); margin-bottom: 1.5rem; }
+    .cover-tags { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; margin-bottom: 1.5rem; }
+    .cover-tags .tag { padding: .25rem .75rem; border-radius: 20px; background: rgba(201,168,76,.12); border: 1px solid var(--c-border); font-size: .8rem; color: var(--c-gold2); }
+    .cover-author { font-size: .9rem; color: var(--c-text2); }
+    .cover-author span { color: var(--c-gold); }
+  </style>
+</head>
+<body>
+
+<!-- nav -->
+<nav>
+  <div class="container">
+    <a href="#" class="logo">{{ meta.title }}</a>
+    <ul>
+      <li><a href="#cover">封面</a></li>
+      <li><a href="#characters">角色</a></li>
+      <li><a href="#world">世界观</a></li>
+      <li><a href="#storyboard">分镜</a></li>
+      <li><a href="#contact">联系</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- 封面 -->
+<section id="cover">
+  <div class="container">
+    <div class="cover-image-wrap">
+      <!-- 放一张封面大图到 img/ 目录，改 meta.yaml 里的 cover_img 字段即可 -->
+    </div>
+    <div class="cover-title">{{ meta.title }}</div>
+    <div class="cover-subtitle">{{ meta.subtitle }}</div>
+    <div class="cover-tags">{{ meta.tags }}</div>
+    <div class="cover-author">作者：<span>{{ meta.author }}</span></div>
+  </div>
+</section>
+
+<!-- 角色 -->
+<section id="characters">
+  <div class="container">
+    <div class="section-label">Characters</div>
+    <div class="section-title">角色设定</div>
+    <div class="divider"></div>
+    <div class="section-desc">三位核心角色，能力互补，构成叙事张力。</div>
+    <div class="char-grid">{{ characters.cards }}</div>
+  </div>
+</section>
+
+<!-- 世界观 -->
+<section id="world">
+  <div class="container">
+    <div class="section-label">World Setting</div>
+    <div class="section-title">世界观设定</div>
+    <div class="divider"></div>
+    <div class="world-grid">{{ world.cards }}</div>
+    <div class="power-system">
+      <h3>文气体系</h3>
+      <ul class="power-list">{{ world.powers }}</ul>
+    </div>
+  </div>
+</section>
+
+<!-- 分镜 -->
+<section id="storyboard">
+  <div class="container">
+    <div class="section-label">Storyboard</div>
+    <div class="section-title">{{ storyboard.episode_title }}</div>
+    <div class="divider"></div>
+    <div class="section-desc">{{ storyboard.episode_desc }}</div>
+    <div class="episodes">
+      <div class="story-grid">{{ storyboard.frames }}</div>
+    </div>
+  </div>
+</section>
+
+<!-- 联系 -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <div class="section-title">联系方式</div>
+    <div class="divider"></div>
+    <div class="contact-links">{{ contact.links }}</div>
+    <p class="contact-intro">{{ contact.intro }}</p>
+    <p class="contact-collab">{{ contact.collaboration }}</p>
+  </div>
+</section>
+
+<footer>
+  <p>{{ meta.title }} · AI漫剧作品集 · {{ meta.author }}</p>
+</footer>
+
+</body>
+</html>
