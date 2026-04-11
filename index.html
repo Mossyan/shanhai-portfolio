@@ -1,561 +1,259 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>山海志异 | AI漫剧作品集</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>山海志异</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-primary: #0d0d0f;
-      --bg-card: #161618;
-      --bg-card-hover: #1e1e21;
-      --border: #2a2a2e;
-      --border-bright: #3d3d42;
-      --text-primary: #f0ede6;
-      --text-secondary: #8a8a8f;
-      --text-muted: #555560;
-      --gold: #c8a96e;
-      --gold-dim: rgba(200,169,110,0.15);
-      --gold-glow: rgba(200,169,110,0.08);
-      --accent-blue: #5b8dd9;
-      --accent-red: #e05c5c;
+      --c-bg: #0a0b14;
+      --c-bg2: #0f1123;
+      --c-surface: #13152a;
+      --c-border: rgba(201,168,76,.2);
+      --c-gold: #c9a84c;
+      --c-gold2: #e8c46a;
+      --c-text: #e8e0d0;
+      --c-text2: #8a8070;
+      --c-accent: #c9a84c;
+      --font-zh: 'Noto Serif SC', 'SimSun', serif;
+      --font-title: 'Ma Shan Zheng', cursive;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: 'Noto Sans SC', 'PingFang SC', sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.7;
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: var(--font-zh);
+      line-height: 1.8;
       overflow-x: hidden;
     }
 
-    /* 顶部导航 */
+    /* nav */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(13,13,15,0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--gold);
-      letter-spacing: 0.1em;
-    }
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-    .nav-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 0.875rem;
-      letter-spacing: 0.05em;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text-primary); }
-    .nav-author {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-    .nav-author span { color: var(--gold); }
-
-    /* 通用容器 */
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,11,20,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--c-border);
       padding: 0 2rem;
     }
-    section { padding: 6rem 0; }
+    nav .container {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; height: 60px;
+    }
+    nav .logo { font-family: var(--font-title); font-size: 1.5rem; color: var(--c-gold); text-decoration: none; }
+    nav ul { list-style: none; display: flex; gap: 1.5rem; }
+    nav a { color: var(--c-text2); text-decoration: none; font-size: .9rem; transition: color .3s; }
+    nav a:hover { color: var(--c-gold); }
 
-    /* 分割线 */
+    /* hero */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      background: linear-gradient(160deg, #0a0b14 40%, #0f1a2a 100%);
+      padding: 6rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 50%, rgba(201,168,76,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+    }
+    .hero-img-wrap {
+      position: relative; border-radius: 12px; overflow: hidden;
+      aspect-ratio: 16/9; background: var(--c-surface);
+      border: 1px solid var(--c-border);
+    }
+    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-text { text-align: left; }
+    .hero-title {
+      font-family: var(--font-title); font-size: 3.5rem; color: var(--c-gold);
+      line-height: 1.2; margin-bottom: 1rem;
+      text-shadow: 0 0 40px rgba(201,168,76,.3);
+    }
+    .hero-subtitle { font-size: 1.1rem; color: var(--c-text2); margin-bottom: 2rem; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .hero-tags .tag {
+      padding: .25rem .75rem; border-radius: 20px;
+      background: rgba(201,168,76,.12); border: 1px solid var(--c-border);
+      font-size: .8rem; color: var(--c-gold2);
+    }
+    .hero-author { margin-top: 1.5rem; font-size: .9rem; color: var(--c-text2); }
+    .hero-author span { color: var(--c-gold); }
+
+    /* container */
+    .container { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
+    section { padding: 5rem 0; }
+
+    /* labels */
     .section-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
+      font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
+      color: var(--c-gold); opacity: .7; margin-bottom: .5rem;
     }
     .section-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 1rem;
+      font-family: var(--font-title); font-size: 2.2rem; color: var(--c-gold);
+      margin-bottom: .5rem;
     }
-    .section-desc {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      max-width: 600px;
-      margin-bottom: 3rem;
-    }
+    .section-desc { color: var(--c-text2); margin-bottom: 2rem; max-width: 600px; }
     .divider {
-      width: 40px; height: 2px;
-      background: var(--gold);
-      margin: 0 0 3rem;
-    }
-
-    /* ==================== 封面区 ==================== */
-    #cover {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      padding: 6rem 2rem 4rem;
-    }
-
-    .cover-image-wrap {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      margin-bottom: 3rem;
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .cover-image-wrap img {
-      width: 100%;
-      display: block;
-    }
-
-    .cover-placeholder {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: var(--bg-card);
-      border: 2px dashed var(--border-bright);
-      border-radius: 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      color: var(--text-muted);
-      font-size: 0.875rem;
-    }
-    .cover-placeholder .icon { font-size: 2.5rem; opacity: 0.4; }
-    .cover-placeholder strong { color: var(--gold); font-weight: 500; }
-
-    .cover-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-    }
-    .cover-subtitle {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      letter-spacing: 0.15em;
-      margin-bottom: 1.5rem;
-    }
-    .cover-tags {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      justify-content: center;
+      width: 60px; height: 2px; background: linear-gradient(90deg, var(--c-gold), transparent);
       margin-bottom: 2rem;
     }
-    .tag {
-      padding: 0.3rem 0.9rem;
-      border: 1px solid var(--border-bright);
-      border-radius: 20px;
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      background: var(--bg-card);
-    }
-    .cover-author {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-    }
-    .cover-author span { color: var(--gold); }
 
-    /* ==================== 角色展示 ==================== */
-    #characters { background: var(--bg-primary); }
-
-    .char-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-
+    /* character grid */
+    .char-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 2rem; }
     .char-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s;
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: 12px; overflow: hidden; transition: transform .3s, border-color .3s;
     }
-    .char-card:hover {
-      border-color: var(--border-bright);
-      transform: translateY(-4px);
+    .char-card:hover { transform: translateY(-4px); border-color: var(--c-gold); }
+    .char-img-wrap { position: relative; }
+    .char-img-wrap img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
+    .char-img-wrap img[src=""] { display: none; }
+    .char-img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(19,21,42,.8) 100%);
     }
-
-    .char-img-wrap {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-      background: var(--bg-card-hover);
-    }
-    .char-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-    .char-placeholder {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: var(--bg-card-hover);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-    }
-    .char-placeholder .icon { font-size: 2rem; opacity: 0.3; }
-    .char-placeholder strong { color: var(--gold); }
-
     .char-badge {
-      position: absolute;
-      top: 1rem; right: 1rem;
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
+      position: absolute; bottom: .75rem; left: .75rem; z-index: 1;
+      padding: .2rem .6rem; border-radius: 20px; font-size: .75rem; font-weight: 600;
     }
-    .badge-protagonist { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold); }
-    .badge-supporting { background: rgba(91,141,217,0.15); color: var(--accent-blue); border: 1px solid var(--accent-blue); }
-    .badge-antagonist { background: rgba(224,92,92,0.15); color: var(--accent-red); border: 1px solid var(--accent-red); }
+    .badge-protagonist { background: rgba(201,168,76,.85); color: #1a1a2e; }
+    .badge-supporting { background: rgba(76,132,255,.85); color: #fff; }
+    .badge-antagonist { background: rgba(180,50,50,.85); color: #fff; }
+    .char-info { padding: 1.25rem; }
+    .char-name { font-family: var(--font-title); font-size: 1.5rem; color: var(--c-gold); margin-bottom: .25rem; }
+    .char-name-en { font-size: .8rem; color: var(--c-text2); margin-bottom: .75rem; }
+    .char-desc { font-size: .9rem; color: var(--c-text2); margin-bottom: 1rem; line-height: 1.7; }
+    .char-ability { font-size: .85rem; color: var(--c-text); }
+    .char-ability span { color: var(--c-gold); font-weight: 600; }
 
-    .char-info { padding: 1.5rem; }
-    .char-name {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.25rem;
-    }
-    .char-name-en {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      letter-spacing: 0.05em;
-    }
-    .char-desc {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-    }
-    .char-ability {
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-    .char-ability span { color: var(--gold); }
-
-    /* ==================== 世界观设定 ==================== */
-    #world { background: var(--bg-card); }
-    .world-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
+    /* world */
+    .world-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1.5rem; }
     .world-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: 10px; overflow: hidden;
     }
-    .world-card-img {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: var(--bg-card-hover);
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-    }
-    .world-card-img .icon { font-size: 1.5rem; opacity: 0.3; }
-    .world-card-img strong { color: var(--gold); }
-    .world-card-body { padding: 1.5rem; }
-    .world-card-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.75rem;
-    }
-    .world-card-text {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-    }
-    .power-system {
-      background: var(--bg-primary);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-    }
-    .power-system h3 {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 1.1rem;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
-    }
-    .power-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-    .power-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    .power-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      margin-top: 0.5rem;
-      flex-shrink: 0;
-    }
-    .dot-gold { background: var(--gold); }
-    .dot-blue { background: var(--accent-blue); }
-    .dot-red { background: var(--accent-red); }
-    .power-name { font-size: 0.9rem; font-weight: 500; color: var(--text-primary); }
-    .power-desc { font-size: 0.8rem; color: var(--text-secondary); }
+    .world-card-img { aspect-ratio: 16/9; overflow: hidden; }
+    .world-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .world-card-img:has(img[src=""]) { display: none; }
+    .world-card-body { padding: 1rem 1.25rem; }
+    .world-card-title { font-family: var(--font-title); font-size: 1.2rem; color: var(--c-gold); margin-bottom: .5rem; }
+    .world-card-text { font-size: .875rem; color: var(--c-text2); line-height: 1.7; }
 
-    /* ==================== 分镜脚本 ==================== */
-    #storyboard { background: var(--bg-primary); }
+    /* power system */
+    .power-system { margin-top: 2rem; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 10px; padding: 1.5rem; }
+    .power-system h3 { font-family: var(--font-title); color: var(--c-gold); margin-bottom: 1rem; font-size: 1.2rem; }
+    .power-list { list-style: none; display: flex; flex-direction: column; gap: .75rem; }
+    .power-item { display: flex; align-items: flex-start; gap: .75rem; font-size: .9rem; }
+    .power-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+    .dot-gold { background: var(--c-gold); box-shadow: 0 0 8px rgba(201,168,76,.5); }
+    .dot-blue { background: #4c84ff; box-shadow: 0 0 8px rgba(76,132,255,.5); }
+    .dot-red { background: #b43232; box-shadow: 0 0 8px rgba(180,50,50,.5); }
+    .power-name { color: var(--c-text); font-weight: 600; margin-bottom: .1rem; }
+    .power-desc { color: var(--c-text2); }
 
-    .episodes { display: flex; flex-direction: column; gap: 2rem; }
-    .episode-title {
-      font-family: 'Noto Serif SC', serif;
-      font-size: 1.3rem;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .story-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
+    /* episodes / storyboard */
+    .episodes { display: flex; flex-direction: column; gap: 1.5rem; }
+    .episode-title { font-family: var(--font-title); font-size: 1.5rem; color: var(--c-gold); margin-bottom: 1rem; }
+    .story-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.5rem; }
     .frame-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: border-color 0.2s;
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: 10px; overflow: hidden;
     }
-    .frame-card:hover { border-color: var(--border-bright); }
-
     .frame-img {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: var(--bg-card-hover);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      border-bottom: 1px solid var(--border);
+      aspect-ratio: 16/9; background: var(--c-bg2);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: .25rem; font-size: .8rem; color: var(--c-text2);
+      overflow: hidden; position: relative;
     }
-    .frame-img .icon { font-size: 1.2rem; opacity: 0.25; }
-    .frame-img strong { color: var(--text-secondary); }
-
+    .frame-img img { width: 100%; height: 100%; object-fit: cover; }
+    .frame-img .icon { font-size: 1.5rem; }
     .frame-body { padding: 1rem 1.25rem; }
-    .frame-num {
-      font-size: 0.7rem;
-      color: var(--gold);
-      letter-spacing: 0.1em;
-      margin-bottom: 0.4rem;
+    .frame-num { font-size: .75rem; color: var(--c-gold); margin-bottom: .5rem; font-weight: 600; }
+    .frame-desc { font-size: .875rem; color: var(--c-text2); margin-bottom: .75rem; line-height: 1.6; }
+    .frame-dialogue { font-size: .8rem; color: var(--c-text); font-style: italic; border-left: 2px solid var(--c-gold); padding-left: .75rem; }
+
+    /* contact */
+    .contact-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+    .contact-links a {
+      display: inline-flex; align-items: center; gap: .5rem;
+      padding: .5rem 1.25rem; border-radius: 25px;
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      color: var(--c-text); text-decoration: none; font-size: .9rem;
+      transition: border-color .3s, color .3s;
     }
-    .frame-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.5rem; }
-    .frame-dialogue {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-style: italic;
-      padding-left: 0.75rem;
-      border-left: 2px solid var(--border);
+    .contact-links a:hover { border-color: var(--c-gold); color: var(--c-gold); }
+    .contact-intro { color: var(--c-text2); font-size: 1rem; margin-bottom: 1rem; }
+    .contact-collab { color: var(--c-text2); font-size: .9rem; }
+
+    /* footer */
+    footer {
+      text-align: center; padding: 2rem; color: var(--c-text2); font-size: .8rem;
+      border-top: 1px solid var(--c-border); margin-top: 2rem;
     }
 
-    /* ==================== AI提示词 ==================== */
-    #prompts { background: var(--bg-card); }
-    .prompt-tabs {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-    .prompt-tab {
-      padding: 0.5rem 1.2rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--bg-primary);
-      color: var(--text-secondary);
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-decoration: none;
-    }
-    .prompt-tab.active, .prompt-tab:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-      background: var(--gold-glow);
-    }
-    .prompt-set { display: none; }
-    .prompt-set.active { display: block; }
-
-    .prompt-list { display: flex; flex-direction: column; gap: 1.5rem; }
-    .prompt-card {
-      background: var(--bg-primary);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-    }
-    .prompt-header {
-      padding: 1rem 1.25rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
-    }
-    .prompt-label {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--gold);
-      letter-spacing: 0.05em;
-    }
-    .prompt-type-badge {
-      font-size: 0.7rem;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      background: var(--gold-dim);
-      color: var(--gold);
-      border: 1px solid rgba(200,169,110,0.3);
-    }
-    .prompt-body { padding: 1rem 1.25rem; }
-    .prompt-text {
-      font-size: 0.825rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
-      font-family: 'Courier New', monospace;
-      word-break: break-all;
-    }
-    .prompt-copy {
-      margin-top: 0.75rem;
-      padding: 0.4rem 0.9rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text-muted);
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .prompt-copy:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* ==================== 联系我 ==================== */
-    #contact { background: var(--bg-primary); text-align: center; }
-    .contact-text {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      margin-bottom: 2rem;
-    }
-    .contact-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
-    .contact-link {
-      padding: 0.75rem 2rem;
-      border: 1px solid var(--border-bright);
-      border-radius: 8px;
-      color: var(--text-primary);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-    }
-    .contact-link:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* 动画 */
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    section > * { animation: fadeInUp 0.6s ease both; }
-
-    /* 响应式 */
+    /* responsive */
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .world-grid { grid-template-columns: 1fr; }
+      nav ul { gap: 1rem; }
+      nav a { font-size: .8rem; }
+      .hero-content { grid-template-columns: 1fr; }
+      .hero-text { text-align: center; }
+      .hero-title { font-size: 2.5rem; }
       .char-grid { grid-template-columns: 1fr; }
       .story-grid { grid-template-columns: 1fr; }
     }
 
-    /* 图片替换说明 */
-    .img-replace-note {
-      background: var(--gold-dim);
-      border: 1px solid rgba(200,169,110,0.3);
-      border-radius: 8px;
-      padding: 1rem 1.5rem;
-      margin: 2rem auto;
-      max-width: 700px;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      line-height: 1.8;
+    /* cover section */
+    section#cover {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,168,76,.07) 0%, transparent 70%);
+      padding-top: 60px;
     }
-    .img-replace-note strong { color: var(--gold); }
+    section#cover .container { text-align: center; }
+    .cover-image-wrap {
+      max-width: 700px; margin: 0 auto 2rem;
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--c-border);
+      aspect-ratio: 16/9; background: var(--c-surface);
+    }
+    .cover-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .cover-title { font-family: var(--font-title); font-size: 3.5rem; color: var(--c-gold); margin-bottom: .5rem; text-shadow: 0 0 40px rgba(201,168,76,.3); }
+    .cover-subtitle { font-size: 1.1rem; color: var(--c-text2); margin-bottom: 1.5rem; }
+    .cover-tags { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; margin-bottom: 1.5rem; }
+    .cover-tags .tag { padding: .25rem .75rem; border-radius: 20px; background: rgba(201,168,76,.12); border: 1px solid var(--c-border); font-size: .8rem; color: var(--c-gold2); }
+    .cover-author { font-size: .9rem; color: var(--c-text2); }
+    .cover-author span { color: var(--c-gold); }
   </style>
 </head>
 <body>
 
-<!-- 顶部导航 -->
+<!-- nav -->
 <nav>
-  <div class="nav-logo">山海志异</div>
-  <ul class="nav-links">
-    <li><a href="#cover">封面</a></li>
-    <li><a href="#characters">角色</a></li>
-    <li><a href="#world">世界观</a></li>
-    <li><a href="#storyboard">分镜脚本</a></li>
-    <li><a href="#prompts">AI提示词</a></li>
-  </ul>
-  <div class="nav-author">作者：<span>曾洋</span></div>
+  <div class="container">
+    <a href="#" class="logo">山海志异</a>
+    <ul>
+      <li><a href="#cover">封面</a></li>
+      <li><a href="#characters">角色</a></li>
+      <li><a href="#world">世界观</a></li>
+      <li><a href="#storyboard">分镜</a></li>
+      <li><a href="#contact">联系</a></li>
+    </ul>
+  </div>
 </nav>
 
-<!-- ==================== 封面 ==================== -->
+<!-- 封面 -->
 <section id="cover">
-  <div class="container" style="display:flex;flex-direction:column;align-items:center;">
+  <div class="container">
     <div class="cover-image-wrap">
-      <!-- 替换这里：放封面图，或删除整段cover-placeholder换成  -->
-      
-    
-
+      <!-- 放一张封面大图到 img/ 目录，改 meta.yaml 里的 cover_img 字段即可 -->
+    </div>
     <div class="cover-title">山海志异</div>
     <div class="cover-subtitle">AI漫剧作品集 · 第一话「破界之逃」</div>
+    <div class="cover-tags">
     <div class="cover-tags">
       <span class="tag">AI漫剧</span>
       <span class="tag">编剧</span>
@@ -563,119 +261,98 @@
       <span class="tag">世界观设计</span>
       <span class="tag">角色设定</span>
     </div>
+</div>
     <div class="cover-author">作者：<span>曾洋</span></div>
   </div>
 </section>
 
-<!-- 图片上传说明 -->
-
-
-<!-- ==================== 角色展示 ==================== -->
+<!-- 角色 -->
 <section id="characters">
   <div class="container">
     <div class="section-label">Characters</div>
     <div class="section-title">角色设定</div>
     <div class="divider"></div>
     <div class="section-desc">三位核心角色，能力互补，构成叙事张力。</div>
-
     <div class="char-grid">
-
-      <!-- 林溪 · 主角 -->
       <div class="char-card">
         <div class="char-img-wrap">
-          <!-- 替换：删除char-placeholder，换成  -->
-          
-          
+          <img src="img/linxi.jpg" alt="林溪" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
           <div class="char-badge badge-protagonist">主角</div>
         </div>
         <div class="char-info">
           <div class="char-name">林溪</div>
           <div class="char-name-en">Lin Xi · The Restoration Clerk</div>
-          <div class="char-desc">古籍修复师，26岁，在现实中是一位清秀干练的青年，意外穿越进入《山海经》世界，成为被时间遗忘文字的"修复者"。性格沉静专注、有轻微强迫症，但在危险时刻展现出超乎寻常的冷静与决断。</div>
+          <div class="char-desc">古籍修复师，26岁，在现实中是一位清秀干练的青年，意外穿越进入《山海经》世界， 成为被时间遗忘文字的"修复者"。性格沉静专注、有轻微强迫症， 但在危险时刻展现出超乎寻常的冷静与决断。</div>
           <div class="char-ability">
-            <span>「观澜」</span> 能看见山海经原文的"文气"流动<br>
-            <span>「补天」</span> 通过书写文字暂时修复世界的破损
+            「观澜」 能看见山海经原文的"文气"流动<br>
+            「补天」 通过书写文字暂时修复世界的破损
           </div>
         </div>
       </div>
 
-      <!-- 涂山九 · 配角 -->
       <div class="char-card">
         <div class="char-img-wrap">
-          <!-- 替换：删除char-placeholder，换成  -->
-          
-          
+          <img src="img/tushan.jpg" alt="涂山九" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
           <div class="char-badge badge-supporting">配角</div>
         </div>
         <div class="char-info">
           <div class="char-name">涂山九</div>
           <div class="char-name-en">Tu Shan Jiu · The Nine-Tailed Wanderer</div>
-          <div class="char-desc">青丘狐族少女，外表18岁（实际年龄不详），青丘狐族，性格狡黠贪玩，实战经验丰富。第一次相遇时试图"救"林溪，却把林溪推向更大的麻烦。口头禅是"不救"。</div>
+          <div class="char-desc">青丘狐族少女，外表18岁（实际年龄不详），青丘狐族，性格狡黠贪玩，实战经验丰富。 第一次相遇时试图"救"林溪，却把林溪推向更大的麻烦。口头禅是"不救"。</div>
           <div class="char-ability">
-            <span>「幻观」</span> 看穿一切幻象与谎言<br>
-            <span>「灵笛」</span> 用灵笛控制心智（但从不对主角使用）
+            「幻观」 看穿一切幻象与谎言<br>
+            「灵笛」 用灵笛控制心智（但从不对主角使用）
           </div>
         </div>
       </div>
 
-      <!-- 蚀文 · 反派 -->
       <div class="char-card">
         <div class="char-img-wrap">
-          <!-- 替换：删除char-placeholder，换成  -->
-          
-          
+          <img src="img/shiwang.jpg" alt="蚀文" style="width:100%;aspect-ratio:1/1;object-fit:cover;">
           <div class="char-badge badge-antagonist">反派</div>
         </div>
         <div class="char-info">
           <div class="char-name">蚀文</div>
           <div class="char-name-en">Shi Wen · The Corrupted Script</div>
-          <div class="char-desc">世界的"文殇"——被时间侵蚀的古籍文字所化成的灾厄。它不是纯粹的恶，而是被时代遗忘的痛苦的集合体，目的是让《山海经》世界归于虚无。</div>
+          <div class="char-desc">世界的"文殇"——被时间侵蚀的古籍文字所化成的灾厄。它不是纯粹的恶， 而是被时代遗忘的痛苦的集合体，目的是让《山海经》世界归于虚无。</div>
           <div class="char-ability">
-            <span>「蚀文」</span> 将一切文字腐蚀为空无之地<br>
-            <span>「旧忆」</span> 利用被遗忘的痛苦记忆打击对手
+            「蚀文」 将一切文字腐蚀为空无之地<br>
+            「旧忆」 利用被遗忘的痛苦记忆打击对手
           </div>
         </div>
       </div>
-
-    </div>
+</div>
   </div>
 </section>
 
-<!-- ==================== 世界观设定 ==================== -->
+<!-- 世界观 -->
 <section id="world">
   <div class="container">
     <div class="section-label">World Setting</div>
     <div class="section-title">世界观设定</div>
     <div class="divider"></div>
-
     <div class="world-grid">
-      <div>
         <div class="world-card">
-          <div class="world-card-img" style="background:linear-gradient(135deg,#1a0a2e 0%,#16213e 50%,#0f3460 100%);"></div>
+          <div class="world-card-img"><div style="width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#1a0a2e,#16213e,#0f3460);"></div></div>
           <div class="world-card-body">
             <div class="world-card-title">昆仑墟</div>
-            <div class="world-card-text">
-              天界废墟，山海经世界的中心。残破的宫殿、崩塌的玉阶、仍在运转的上古机关。这里是"文气"最浓郁的地方，也是蚀文侵蚀最严重的区域。废墟中仍存活的机关守卫，会本能攻击一切靠近者——除非你能读懂它们的铭文。
-            </div>
+            <div class="world-card-text">天界废墟，山海经世界的中心。残破的宫殿、崩塌的玉阶、仍在运转的上古机关。 这里是"文气"最浓郁的地方，也是蚀文侵蚀最严重的区域。 废墟中仍存活的机关守卫，会本能攻击一切靠近者——除非你能读懂它们的铭文。</div>
           </div>
         </div>
         <br>
+
         <div class="world-card">
-          <div class="world-card-img" style="background:linear-gradient(135deg,#1a0a2e 0%,#16213e 50%,#0f3460 100%);"></div>
-          
+          <div class="world-card-img"><div style="width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#1a0a2e,#16213e,#0f3460);"></div></div>
           <div class="world-card-body">
             <div class="world-card-title">青丘 · 狐族领地</div>
-            <div class="world-card-text">
-              九尾狐族的故乡，与人间相邻却又隔绝的奇妙空间。常年桃花盛开，有特殊的结界保护外界干扰。青丘狐族与《山海经》世界有古老的契约关系。
-            </div>
+            <div class="world-card-text">九尾狐族的故乡，与人间相邻却又隔绝的奇妙空间。常年桃花盛开， 有特殊的结界保护外界干扰。青丘狐族与《山海经》世界有古老的契约关系。</div>
           </div>
         </div>
-      </div>
-
-      <div>
-        <div class="power-system">
-          <h3>文气体系</h3>
-          <ul class="power-list">
+        <br>
+</div>
+    <div class="power-system">
+      <h3>文气体系</h3>
+      <ul class="power-list">
             <li class="power-item">
               <div class="power-dot dot-gold"></div>
               <div>
@@ -683,6 +360,7 @@
                 <div class="power-desc">用文字沟通万物的能力（修复者的基础能力）</div>
               </div>
             </li>
+
             <li class="power-item">
               <div class="power-dot dot-blue"></div>
               <div>
@@ -690,37 +368,31 @@
                 <div class="power-desc">用文字攻击/防御（战斗系能力）</div>
               </div>
             </li>
-                        <li class="power-item">
+
+            <li class="power-item">
               <div class="power-dot dot-red"></div>
               <div>
-                <div class="power-name">理炒</div>
+                <div class="power-name">理炁</div>
                 <div class="power-desc">与世界中的玉壁建立链接（最高阶能力），能短暂获得上古守护者的部分记忆与力量</div>
               </div>
             </li>
-          </ul>
-        </div>
-      </div>
+</ul>
     </div>
   </div>
 </section>
 
-<!-- ==================== 分镜脚本 ==================== -->
+<!-- 分镜 -->
 <section id="storyboard">
   <div class="container">
     <div class="section-label">Storyboard</div>
-    <div class="section-title">第一话分镜脚本</div>
+    <div class="section-title">第一话 · 破界之逃</div>
     <div class="divider"></div>
-    <div class="section-desc">「破界之逃」· 选题：一个现代人穿越进入《山海经》世界，发现自己的修复工作能真正改变这个世界的命运。</div>
-
+    <div class="section-desc">选题：一个现代人穿越进入《山海经》世界，发现自己的修复工作能真正改变这个世界的命运。</div>
     <div class="episodes">
-      <div class="episode-title">第一话 · 破界之逃</div>
       <div class="story-grid">
-
-        <!-- 帧1 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧1 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧1 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 01</div>
@@ -729,11 +401,9 @@
           </div>
         </div>
 
-        <!-- 帧2 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧2 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧2 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 02</div>
@@ -742,11 +412,9 @@
           </div>
         </div>
 
-        <!-- 帧3 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧3 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧3 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 03</div>
@@ -755,11 +423,9 @@
           </div>
         </div>
 
-        <!-- 帧4 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧4 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧4 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 04</div>
@@ -768,11 +434,9 @@
           </div>
         </div>
 
-        <!-- 帧5 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧5 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧5 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 05</div>
@@ -781,11 +445,9 @@
           </div>
         </div>
 
-        <!-- 帧6 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧6 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧6 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 06</div>
@@ -794,24 +456,20 @@
           </div>
         </div>
 
-        <!-- 帧7 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧7 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧7 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 07</div>
             <div class="frame-desc">林溪回头，看见自己身上的衬衫已经变成古袍（无缝转变），手指间还有未消散的金色光粒——文字觉醒的痕迹。</div>
-            <div class="frame-dialogue">林溪：这是……《山海经》的世界？ 那本书……那本我正在修复的书！</div>
+            <div class="frame-dialogue">林溪：这是……《山海经》的世界？那本书……那本我正在修复的书！</div>
           </div>
         </div>
 
-        <!-- 帧8 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧8 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧8 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 08</div>
@@ -820,11 +478,9 @@
           </div>
         </div>
 
-        <!-- 帧9 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧9 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧9 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 09</div>
@@ -833,11 +489,9 @@
           </div>
         </div>
 
-        <!-- 帧10 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧10 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧10 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 10</div>
@@ -846,24 +500,20 @@
           </div>
         </div>
 
-        <!-- 帧11 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧11 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧11 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 11</div>
             <div class="frame-desc">林溪看着手掌中残留的文字光粒，又看看周围的山海世界：这不是梦。她接受了。</div>
-            <div class="frame-dialogue">林溪：我的工作，是让那些被时间遗忘的文字，重新被看见。 那现在……就包括这个世界。</div>
+            <div class="frame-dialogue">林溪：我的工作，是让那些被时间遗忘的文字，重新被看见。那现在……就包括这个世界。</div>
           </div>
         </div>
 
-        <!-- 帧12 -->
         <div class="frame-card">
           <div class="frame-img">
-            <div class="icon">🎬</div>
-            <strong>帧12 · 待配图</strong>
+            <div class="icon">🎬</div><strong>帧12 · 待配图</strong>
           </div>
           <div class="frame-body">
             <div class="frame-num">帧 12</div>
@@ -871,207 +521,26 @@
             <div class="frame-dialogue">标题出现：《山海志异》第一话·破界之逃·完。</div>
           </div>
         </div>
-
-      </div>
+</div>
     </div>
   </div>
 </section>
 
-<!-- ==================== AI提示词 ==================== -->
-<section id="prompts">
-  <div class="container">
-    <div class="section-label">AI Prompts</div>
-    <div class="section-title">AI图像生成提示词</div>
-    <div class="divider"></div>
-    <div class="section-desc">专业级提示词，可直接复制使用。包含仿真人（数字人）和动漫两套风格，适配不同岗位需求。</div>
-
-    <div class="prompt-tabs">
-      <a href="#" class="prompt-tab active" onclick="switchTab('realistic',this);return false;">仿真人风格</a>
-      <a href="#" class="prompt-tab" onclick="switchTab('anime',this);return false;">动漫风格</a>
-    </div>
-
-    <!-- 仿真人提示词 -->
-    <div class="prompt-set active" id="tab-realistic">
-      <div class="prompt-list">
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">A1 · 封面 · 穿越瞬间</div>
-            <div class="prompt-type-badge">仿真人</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">A photorealistic close-up shot of a beautiful young Chinese woman, early 30s, her face frozen in shock and wonder, her modern casual outfit dissolving into elegant ancient hanfu as golden light swirls around her, she stands in a glowing portal made of floating ancient Chinese calligraphy characters, long black hair blown by supernatural wind, dark sky with ancient mountain ruins in the background, dramatic backlighting, cinematic 35mm lens, fantasy film still photography</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">A2 · 主角 · 林溪</div>
-            <div class="prompt-type-badge">仿真人</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">A hyper-realistic portrait of a young Chinese woman wearing elegant dark navy blue hanfu with subtle gold embroidery, she holds a glowing ancient manuscript scroll, her expression is calm and intelligent, her long hair neatly styled with a jade hairpin, soft warm cinematic lighting from the side, dark moody background with faint ancient text patterns, fashion photography style, 8K detail, fantasy film character portrait</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">A3 · 配角 · 涂山九</div>
-            <div class="prompt-type-badge">仿真人</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">A hyper-realistic portrait of a beautiful young woman with nine luminous golden fox tails floating behind her, she wears ornate ancient Chinese royal attire with jade ornaments, her expression is playful and mysterious, one hand gently tucking hair behind her ear, she stands in a moonlit bamboo forest, silver-blue moonlight creates soft rim light around her, fog drifts between the bamboo stalks, cinematic photography, fantasy portrait</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">A4 · 反派 · 蚀文</div>
-            <div class="prompt-type-badge">仿真人</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">A terrifying hyper-realistic creature made entirely of ancient black ink Chinese calligraphy characters fused into a humanoid shadow form, two glowing crimson eyes pierce through the darkness at the center, black ink tendrils extend from the body holding broken stone tablets covered in corrupted text, surrounded by swirling dark mist, ominous red underlighting, horror film aesthetic, dramatic wide shot, dark fantasy</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">A5 · 场景 · 昆仑墟</div>
-            <div class="prompt-type-badge">仿真人</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">A majestic wide shot of ancient stone palace ruins floating among heavy clouds, broken pillars carved with mythical beasts line the crumbling grand staircase, golden divine light breaks through thick mist illuminating dust particles, shattered jade floors and fallen celestial decorations scattered around, vast dramatic sky, epic scale, cinematic photography, Chinese fantasy architecture, 8K detail</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">A6 · 高潮 · 文字觉醒</div>
-            <div class="prompt-type-badge">仿真人</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">A dramatic cinematic still of a young Chinese woman in flowing ancient hanfu kneeling on rocky ground, golden glowing Chinese characters rise from her outstretched hands forming a bright protective shield, a beautiful fox-tailed woman stands beside her in combat stance, a massive dark entity of corrupted characters looms threateningly in the background, epic fantasy battle moment, warm golden light against dark sky, 8K cinematic photography</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- 动漫提示词 -->
-    <div class="prompt-set" id="tab-anime">
-      <div class="prompt-list">
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">B1 · 封面 · 穿越瞬间</div>
-            <div class="prompt-type-badge">动漫</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">Anime key visual illustration, wide cinematic composition, a young woman in a modern hoodie being pulled into a brilliant golden portal surrounded by swirling ancient Chinese calligraphy, her expression shows shock and awe, dynamic motion lines, dramatic sky transitioning from orange sunset to mystical deep purple, ancient mountain ruins visible in the background, clean cel-shaded anime art, vibrant color palette, detailed anime background art, Studio Ghibli-inspired atmosphere, 16:9 film frame</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">B2 · 主角 · 林溪</div>
-            <div class="prompt-type-badge">动漫</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">Anime character portrait illustration, a young Chinese woman in elegant dark blue hanfu decorated with subtle star constellation patterns, she holds an ancient glowing manuscript, her eyes show quiet determination with a hint of warmth, soft smile, clean anime cel-shading, detailed hair with beautiful light reflections, warm golden key light from above, blurred soft background with faint ancient character patterns, Japanese anime art quality, portrait aspect ratio</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">B3 · 配角 · 涂山九</div>
-            <div class="prompt-type-badge">动漫</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">Anime character design illustration, a beautiful fox spirit girl with nine flowing luminous tails made of golden-white light, she wears traditional Chinese-style anime hanfu with intricate floral embroidery, one eye playfully hidden by her hair, her expression is mischievous yet wise, standing in a misty bamboo forest at night, bright full moon casting blue-white light, cel-shaded anime style with dramatic moonlight contrast, detailed anime background, magazine-quality anime artwork</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">B4 · 反派 · 蚀文</div>
-            <div class="prompt-type-badge">动漫</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">Dark anime villain design illustration, a menacing humanoid figure composed entirely of shattered black ink Chinese calligraphy characters, two glowing menacing red eyes visible in the shadowy face, jagged broken characters form sharp tentacle-like appendages, ancient stone tablets float around the corrupted entity, ominous dark red and black color scheme, dramatic anime villain composition, detailed anime background with swirling ink particles, horror-fantasy anime aesthetic</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">B5 · 场景 · 昆仑墟</div>
-            <div class="prompt-type-badge">动漫</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">Anime environment concept art, grand celestial palace ruins floating in ethereal golden mist, magnificent broken pillars decorated with carved mythical beasts, soft golden hour light filtering through dramatic cloud formations, ancient Shan Hai Jing architecture with pagodas and stone archways, wide dramatic perspective, detailed anime background painting style with soft gradients, Studio Ghibli meets Chinese mythology atmosphere, beautiful cinematic composition</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-        <div class="prompt-card">
-          <div class="prompt-header">
-            <div class="prompt-label">B6 · 高潮 · 文字觉醒</div>
-            <div class="prompt-type-badge">动漫</div>
-          </div>
-          <div class="prompt-body">
-            <div class="prompt-text">Anime action key frame, split dramatic composition, a young woman in glowing ancient hanfu raises both hands as brilliant golden Chinese characters swirl upward forming a protective barrier, a fox-tailed girl leaps beside her in an elegant combat pose, a massive dark entity made of corrupted characters attacks from behind, epic climactic scene, dynamic anime action composition, cel-shaded with dramatic contrast lighting, intense emotion, 16:9 cinematic anime frame</div>
-            <button class="prompt-copy" onclick="copyPrompt(this)">复制提示词</button>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ==================== 联系我 ==================== -->
-<section id="contact" style="padding-bottom:4rem;">
+<!-- 联系 -->
+<section id="contact">
   <div class="container">
     <div class="section-label">Contact</div>
-    <div class="section-title">联系我</div>
-    <div class="divider" style="margin:0 auto 2rem;"></div>
-    <div class="contact-text">
-      如果您对《山海志异》的故事感兴趣，或有AI漫剧相关的合作机会，欢迎联系我。
-    </div>
-    <div class="contact-links">
-      <a href="#" class="contact-link">GitHub</a>
-    </div>
-    <div style="margin-top:3rem;font-size:0.8rem;color:var(--text-muted);">
-      © 2026 山海志异作品集 · 曾洋
-    </div>
+    <div class="section-title">联系方式</div>
+    <div class="divider"></div>
+    <div class="contact-links"></div>
+    <p class="contact-intro">AI漫剧创作者，专注山海经同人世界观与角色设计</p>
+    <p class="contact-collab">欢迎各类AI内容创作、漫剧合作、IP联名等联系洽谈</p>
   </div>
 </section>
 
-<script>
-  function switchTab(tab, el) {
-    document.querySelectorAll('.prompt-set').forEach(e => e.classList.remove('active'));
-    document.querySelectorAll('.prompt-tab').forEach(e => e.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    el.classList.add('active');
-  }
-  function copyPrompt(btn) {
-    const text = btn.parentElement.querySelector('.prompt-text').innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = '已复制';
-      setTimeout(() => btn.textContent = '复制提示词', 2000);
-    });
-  }
-</script>
+<footer>
+  <p>山海志异 · AI漫剧作品集 · 曾洋</p>
+</footer>
 
 </body>
 </html>
