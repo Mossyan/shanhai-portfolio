@@ -1,0 +1,44 @@
+# ============================================
+# 角色设定
+# ============================================
+characters:
+
+  - id: linxi
+    name: "林溪"
+    name_en: "Lin Xi · The Restoration Clerk"
+    type: "protagonist"
+    badge: "主角"
+    desc: >
+      古籍修复师，26岁，在现实中是一位清秀干练的青年，意外穿越进入《山海经》世界，
+      成为被时间遗忘文字的"修复者"。性格沉静专注、有轻微强迫症，
+      但在危险时刻展现出超乎寻常的冷静与决断。
+    ability: |
+      「观澜」 能看见山海经原文的"文气"流动
+      「补天」 通过书写文字暂时修复世界的破损
+    img: "img/linxi.jpg"   # 修改这里改成你的角色图文件名
+
+  - id: tushan
+    name: "涂山九"
+    name_en: "Tu Shan Jiu · The Nine-Tailed Wanderer"
+    type: "supporting"
+    badge: "配角"
+    desc: >
+      青丘狐族少女，外表18岁（实际年龄不详），青丘狐族，性格狡黠贪玩，实战经验丰富。
+      第一次相遇时试图"救"林溪，却把林溪推向更大的麻烦。口头禅是"不救"。
+    ability: |
+      「幻观」 看穿一切幻象与谎言
+      「灵笛」 用灵笛控制心智（但从不对主角使用）
+    img: "img/tushan.jpg"
+
+  - id: shiwang
+    name: "蚀文"
+    name_en: "Shi Wen · The Corrupted Script"
+    type: "antagonist"
+    badge: "反派"
+    desc: >
+      世界的"文殇"——被时间侵蚀的古籍文字所化成的灾厄。它不是纯粹的恶，
+      而是被时代遗忘的痛苦的集合体，目的是让《山海经》世界归于虚无。
+    ability: |
+      「蚀文」 将一切文字腐蚀为空无之地
+      「旧忆」 利用被遗忘的痛苦记忆打击对手
+    img: "img/shiwang.jpg"
